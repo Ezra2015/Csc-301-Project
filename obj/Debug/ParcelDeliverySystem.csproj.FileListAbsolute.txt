@@ -1,0 +1,7 @@
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\bin\Debug\ParcelDeliverySystem.exe
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\bin\Debug\ParcelDeliverySystem.pdb
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.Properties.Resources.resources
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.csproj.GenerateResource.Cache
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.exe
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.pdb
