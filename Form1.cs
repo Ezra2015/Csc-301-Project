@@ -9,11 +9,17 @@ using System.Windows.Forms;
 
 namespace ParcelDeliverySystem
 {
-    public partial class Form1 : Form
+    public partial class PDS : Form
     {
-        public Form1()
+        public PDS()
         {
             InitializeComponent();
         }
+
+        private void PDS_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

@@ -5,3 +5,4 @@ C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\De
 C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.csproj.GenerateResource.Cache
 C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.exe
 C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.pdb
+C:\Users\E\Desktop\Year 3\csc301_ProgrammingLanguage\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.PDS.resources
