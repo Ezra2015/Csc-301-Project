@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PDS));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.edtPage = new System.Windows.Forms.TabPage();
@@ -35,7 +36,7 @@
             this.edtBox = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
-            this.clrBtn = new System.Windows.Forms.Button();
+            this.rstBtn = new System.Windows.Forms.Button();
             this.calBtn = new System.Windows.Forms.Button();
             this.dpcTxtBox = new System.Windows.Forms.TextBox();
             this.opcTxtBox = new System.Windows.Forms.TextBox();
@@ -53,21 +54,22 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.wtBox = new System.Windows.Forms.TextBox();
             this.estTxtResult = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.rstBtn1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.gpPage = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.pdfBtn = new System.Windows.Forms.Button();
-            this.wordBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.rateCost = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.errorMessage = new System.Windows.Forms.ErrorProvider(this.components);
+            this.pdfBtn = new System.Windows.Forms.Button();
+            this.wordBtn = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.edtPage.SuspendLayout();
             this.edtBox.SuspendLayout();
@@ -75,6 +77,7 @@
             this.pcBox.SuspendLayout();
             this.gpPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorMessage)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -113,7 +116,7 @@
             // 
             this.edtBox.Controls.Add(this.comboBox1);
             this.edtBox.Controls.Add(this.datePicker);
-            this.edtBox.Controls.Add(this.clrBtn);
+            this.edtBox.Controls.Add(this.rstBtn);
             this.edtBox.Controls.Add(this.calBtn);
             this.edtBox.Controls.Add(this.dpcTxtBox);
             this.edtBox.Controls.Add(this.opcTxtBox);
@@ -191,7 +194,7 @@
             // 
             // datePicker
             // 
-            this.datePicker.CustomFormat = "";
+            this.datePicker.CustomFormat = "dd/MM/yyyy";
             this.datePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.datePicker.Location = new System.Drawing.Point(135, 117);
             this.datePicker.MaxDate = new System.DateTime(2020, 12, 31, 0, 0, 0, 0);
@@ -199,15 +202,16 @@
             this.datePicker.Name = "datePicker";
             this.datePicker.Size = new System.Drawing.Size(140, 20);
             this.datePicker.TabIndex = 10;
+            this.datePicker.ValueChanged += new System.EventHandler(this.datePicker_ValueChanged);
             // 
-            // clrBtn
+            // rstBtn
             // 
-            this.clrBtn.Location = new System.Drawing.Point(294, 195);
-            this.clrBtn.Name = "clrBtn";
-            this.clrBtn.Size = new System.Drawing.Size(75, 23);
-            this.clrBtn.TabIndex = 13;
-            this.clrBtn.Text = "Clear";
-            this.clrBtn.UseVisualStyleBackColor = true;
+            this.rstBtn.Location = new System.Drawing.Point(294, 195);
+            this.rstBtn.Name = "rstBtn";
+            this.rstBtn.Size = new System.Drawing.Size(75, 23);
+            this.rstBtn.TabIndex = 13;
+            this.rstBtn.Text = "Reset";
+            this.rstBtn.UseVisualStyleBackColor = true;
             // 
             // calBtn
             // 
@@ -217,6 +221,7 @@
             this.calBtn.TabIndex = 12;
             this.calBtn.Text = "Calculate";
             this.calBtn.UseVisualStyleBackColor = true;
+            this.calBtn.Click += new System.EventHandler(this.calBtn_Click);
             // 
             // dpcTxtBox
             // 
@@ -344,7 +349,7 @@
             this.pcBox.Controls.Add(this.comboBox2);
             this.pcBox.Controls.Add(this.wtBox);
             this.pcBox.Controls.Add(this.estTxtResult);
-            this.pcBox.Controls.Add(this.button1);
+            this.pcBox.Controls.Add(this.rstBtn1);
             this.pcBox.Controls.Add(this.button2);
             this.pcBox.Controls.Add(this.label10);
             this.pcBox.Controls.Add(this.label11);
@@ -387,14 +392,14 @@
             this.estTxtResult.Size = new System.Drawing.Size(140, 20);
             this.estTxtResult.TabIndex = 1;
             // 
-            // button1
+            // rstBtn1
             // 
-            this.button1.Location = new System.Drawing.Point(294, 195);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = true;
+            this.rstBtn1.Location = new System.Drawing.Point(294, 195);
+            this.rstBtn1.Name = "rstBtn1";
+            this.rstBtn1.Size = new System.Drawing.Size(75, 23);
+            this.rstBtn1.TabIndex = 5;
+            this.rstBtn1.Text = "Reset";
+            this.rstBtn1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -447,6 +452,15 @@
             this.gpPage.TabIndex = 2;
             this.gpPage.Text = "Generate Report";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(251, 267);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 3;
+            this.button4.Text = "Close";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label13);
@@ -493,6 +507,29 @@
             this.label8.TabIndex = 6;
             this.label8.Text = "Export to MS Word";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 117);
+            this.label7.Name = "label7";
+            this.label7.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.label7.Size = new System.Drawing.Size(0, 18);
+            this.label7.TabIndex = 4;
+            // 
+            // rateCost
+            // 
+            this.rateCost.Location = new System.Drawing.Point(442, 9);
+            this.rateCost.Name = "rateCost";
+            this.rateCost.Size = new System.Drawing.Size(166, 23);
+            this.rateCost.TabIndex = 1;
+            this.rateCost.Text = "Local/Overseas Postage Rates";
+            this.rateCost.UseVisualStyleBackColor = true;
+            this.rateCost.Click += new System.EventHandler(this.rateCost_Click);
+            // 
+            // errorMessage
+            // 
+            this.errorMessage.ContainerControl = this;
+            // 
             // pdfBtn
             // 
             this.pdfBtn.BackColor = System.Drawing.Color.Transparent;
@@ -514,33 +551,6 @@
             this.wordBtn.TabIndex = 1;
             this.wordBtn.UseVisualStyleBackColor = false;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 117);
-            this.label7.Name = "label7";
-            this.label7.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.label7.Size = new System.Drawing.Size(0, 18);
-            this.label7.TabIndex = 4;
-            // 
-            // rateCost
-            // 
-            this.rateCost.Location = new System.Drawing.Point(442, 9);
-            this.rateCost.Name = "rateCost";
-            this.rateCost.Size = new System.Drawing.Size(166, 23);
-            this.rateCost.TabIndex = 1;
-            this.rateCost.Text = "Local/Overseas Postage Rates";
-            this.rateCost.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(251, 267);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Close";
-            this.button4.UseVisualStyleBackColor = false;
-            // 
             // PDS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -549,6 +559,7 @@
             this.ClientSize = new System.Drawing.Size(624, 362);
             this.Controls.Add(this.rateCost);
             this.Controls.Add(this.tabControl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(800, 600);
             this.MinimumSize = new System.Drawing.Size(640, 400);
@@ -566,6 +577,7 @@
             this.gpPage.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorMessage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -589,13 +601,13 @@
         private System.Windows.Forms.TextBox dpcTxtBox;
         private System.Windows.Forms.TextBox opcTxtBox;
         private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.Button clrBtn;
+        private System.Windows.Forms.Button rstBtn;
         private System.Windows.Forms.Button calBtn;
         private System.Windows.Forms.DateTimePicker datePicker;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox pcBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button rstBtn1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
@@ -611,6 +623,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ErrorProvider errorMessage;
     }
 }
 

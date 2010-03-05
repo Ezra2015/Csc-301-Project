@@ -1,0 +1,40 @@
+Local/Oversea Rates Database 
+		 1         2         3         4  	     5         6         7         8         9         10        11        12        13        14     
+123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789
+Origin		Origin		Destination		Delivery Service		Weight			Letters,			Available Days		Available Days for 
+			Postal											   (max 2kg)		Printed Papers 		 for Delivery		Delivery Time
+			Code																& Small Packets							(estimated working days)
+																							
+Singapore	758244		Singapore		DHL						20g				35¢					All days			1		
+			417844												50g				45¢
+			069120												100g			75¢
+			417943												add 1kg			$1.00
+			228208
+			159546		Malaysia		DHL						20g				45¢					Mon, Wed, Thurs,	1	
+			397799												50g				55¢					Sat
+			556827
+			238875
+			787601	
+			437107
+			148582
+			239875
+			408933
+			208569
+			417864
+			160092
+			408706
+			569535
+			729659
+			628971
+			159101
+			218568
+			349313
+			218055
+			218115
+			319075
+			408936
+			349483
+			577197
+			416175
+
+

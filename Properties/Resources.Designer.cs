@@ -60,6 +60,27 @@ namespace ParcelDeliverySystem.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap LocalOverseasPostageRates {
+            get {
+                object obj = ResourceManager.GetObject("LocalOverseasPostageRates", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LocalOverseasPostageRates1 {
+            get {
+                object obj = ResourceManager.GetObject("LocalOverseasPostageRates1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LocalOverseasPostageRates2 {
+            get {
+                object obj = ResourceManager.GetObject("LocalOverseasPostageRates2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap pdf_file_icon {
             get {
                 object obj = ResourceManager.GetObject("pdf-file-icon", resourceCulture);
