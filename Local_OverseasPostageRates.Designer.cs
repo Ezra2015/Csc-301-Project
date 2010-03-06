@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Local_OverseasPostageRates));
             this.lorBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.lorBox)).BeginInit();
             this.SuspendLayout();
             // 
             // lorBox
             // 
-            this.lorBox.Image = global::ParcelDeliverySystem.Properties.Resources.LocalOverseasPostageRates2;
+            this.lorBox.Image = ((System.Drawing.Image)(resources.GetObject("lorBox.Image")));
             this.lorBox.Location = new System.Drawing.Point(2, -3);
             this.lorBox.Name = "lorBox";
             this.lorBox.Size = new System.Drawing.Size(686, 2000);
@@ -48,7 +49,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(709, 521);
+            this.ClientSize = new System.Drawing.Size(726, 521);
             this.Controls.Add(this.lorBox);
             this.Name = "Local_OverseasPostageRates";
             this.Text = "Local_OverseasPostageRates";

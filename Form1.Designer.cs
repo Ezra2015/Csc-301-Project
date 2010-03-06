@@ -65,11 +65,13 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.rateCost = new System.Windows.Forms.Button();
-            this.errorMessage = new System.Windows.Forms.ErrorProvider(this.components);
             this.pdfBtn = new System.Windows.Forms.Button();
             this.wordBtn = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.rateCost = new System.Windows.Forms.Button();
+            this.errorDate = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorPC = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorDPC = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabControl.SuspendLayout();
             this.edtPage.SuspendLayout();
             this.edtBox.SuspendLayout();
@@ -77,7 +79,9 @@
             this.pcBox.SuspendLayout();
             this.gpPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorMessage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorPC)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorDPC)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -88,7 +92,7 @@
             this.tabControl.Location = new System.Drawing.Point(12, 16);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(600, 334);
+            this.tabControl.Size = new System.Drawing.Size(610, 334);
             this.tabControl.TabIndex = 0;
             // 
             // edtPage
@@ -99,7 +103,7 @@
             this.edtPage.Location = new System.Drawing.Point(4, 22);
             this.edtPage.Name = "edtPage";
             this.edtPage.Padding = new System.Windows.Forms.Padding(3);
-            this.edtPage.Size = new System.Drawing.Size(592, 308);
+            this.edtPage.Size = new System.Drawing.Size(602, 308);
             this.edtPage.TabIndex = 0;
             this.edtPage.Text = "Estimated Delivery Time";
             // 
@@ -130,7 +134,7 @@
             this.edtBox.Controls.Add(this.label1);
             this.edtBox.Location = new System.Drawing.Point(6, 6);
             this.edtBox.Name = "edtBox";
-            this.edtBox.Size = new System.Drawing.Size(580, 239);
+            this.edtBox.Size = new System.Drawing.Size(586, 239);
             this.edtBox.TabIndex = 0;
             this.edtBox.TabStop = false;
             this.edtBox.Text = "Estimated Delivery Time";
@@ -229,6 +233,7 @@
             this.dpcTxtBox.Name = "dpcTxtBox";
             this.dpcTxtBox.Size = new System.Drawing.Size(130, 20);
             this.dpcTxtBox.TabIndex = 9;
+            this.dpcTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dpcTxtBox_KeyDown);
             // 
             // opcTxtBox
             // 
@@ -236,6 +241,7 @@
             this.opcTxtBox.Name = "opcTxtBox";
             this.opcTxtBox.Size = new System.Drawing.Size(130, 20);
             this.opcTxtBox.TabIndex = 7;
+            this.opcTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.opcTxtBox_KeyDown);
             // 
             // DestCountryCombo
             // 
@@ -331,7 +337,7 @@
             this.pccPage.Location = new System.Drawing.Point(4, 22);
             this.pccPage.Name = "pccPage";
             this.pccPage.Padding = new System.Windows.Forms.Padding(3);
-            this.pccPage.Size = new System.Drawing.Size(592, 308);
+            this.pccPage.Size = new System.Drawing.Size(602, 308);
             this.pccPage.TabIndex = 1;
             this.pccPage.Text = "Postage Charge Calculator";
             // 
@@ -448,7 +454,7 @@
             this.gpPage.Location = new System.Drawing.Point(4, 22);
             this.gpPage.Name = "gpPage";
             this.gpPage.Padding = new System.Windows.Forms.Padding(3);
-            this.gpPage.Size = new System.Drawing.Size(592, 308);
+            this.gpPage.Size = new System.Drawing.Size(602, 308);
             this.gpPage.TabIndex = 2;
             this.gpPage.Text = "Generate Report";
             // 
@@ -507,29 +513,6 @@
             this.label8.TabIndex = 6;
             this.label8.Text = "Export to MS Word";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 117);
-            this.label7.Name = "label7";
-            this.label7.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.label7.Size = new System.Drawing.Size(0, 18);
-            this.label7.TabIndex = 4;
-            // 
-            // rateCost
-            // 
-            this.rateCost.Location = new System.Drawing.Point(442, 9);
-            this.rateCost.Name = "rateCost";
-            this.rateCost.Size = new System.Drawing.Size(166, 23);
-            this.rateCost.TabIndex = 1;
-            this.rateCost.Text = "Local/Overseas Postage Rates";
-            this.rateCost.UseVisualStyleBackColor = true;
-            this.rateCost.Click += new System.EventHandler(this.rateCost_Click);
-            // 
-            // errorMessage
-            // 
-            this.errorMessage.ContainerControl = this;
-            // 
             // pdfBtn
             // 
             this.pdfBtn.BackColor = System.Drawing.Color.Transparent;
@@ -551,12 +534,43 @@
             this.wordBtn.TabIndex = 1;
             this.wordBtn.UseVisualStyleBackColor = false;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 117);
+            this.label7.Name = "label7";
+            this.label7.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.label7.Size = new System.Drawing.Size(0, 18);
+            this.label7.TabIndex = 4;
+            // 
+            // rateCost
+            // 
+            this.rateCost.Location = new System.Drawing.Point(442, 9);
+            this.rateCost.Name = "rateCost";
+            this.rateCost.Size = new System.Drawing.Size(166, 23);
+            this.rateCost.TabIndex = 1;
+            this.rateCost.Text = "Local/Overseas Postage Rates";
+            this.rateCost.UseVisualStyleBackColor = true;
+            this.rateCost.Click += new System.EventHandler(this.rateCost_Click);
+            // 
+            // errorDate
+            // 
+            this.errorDate.ContainerControl = this;
+            // 
+            // errorPC
+            // 
+            this.errorPC.ContainerControl = this;
+            // 
+            // errorDPC
+            // 
+            this.errorDPC.ContainerControl = this;
+            // 
             // PDS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(624, 362);
+            this.ClientSize = new System.Drawing.Size(634, 372);
             this.Controls.Add(this.rateCost);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -577,7 +591,9 @@
             this.gpPage.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorMessage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorPC)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorDPC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -623,7 +639,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ErrorProvider errorMessage;
+        private System.Windows.Forms.ErrorProvider errorDate;
+        private System.Windows.Forms.ErrorProvider errorPC;
+        private System.Windows.Forms.ErrorProvider errorDPC;
     }
 }
 

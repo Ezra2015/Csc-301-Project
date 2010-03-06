@@ -1,0 +1,141 @@
+Local/Oversea Rates Database 
+          1          2          3          4          5          6          7          8          9         10         11         12            
+0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0123456789_0
+Origin		Origin		Destination		Delivery Service		Weight			Letters,			Available Days		Available Days for 
+            Postal                                             (max 2kg)		Printed Papers 		 for Delivery		Delivery Time
+			Code																& Small Packets							(estimated working days)
+																							
+Singapore   758244      Singapore       DHL                     20g             35c                 All days            1		
+            417844                                              50g             45c
+            069120                                              100g            75c
+            417943                                              add 1kg         $1.00
+            228208
+            159546      Malaysia        DHL                     20g             45c                 Mon, Wed, Thurs,    1	
+            397799                                              50g             55c                 Sat
+            556827                                              100g            85c					
+            238875                                              add 1kg         $1.00				
+            787601	
+            437107      USA             DHL                     20g             60c                 Tues, Wed, Fri,     5
+            148582                                              50g             75c                 Sat				
+            239875                                              100g            $1.00				
+            408933                                              add 1kg         $5.00
+            208569
+            417864      Singapore       Fedex                   20g             35c                 All days            1
+            160092                                              50g             45c	
+            408706                                              100g            75c
+            569535                                              add 1kg         $1.00
+            729659
+            628971      Malaysia        Fedex                   20g             35c                 Mon, Tues, Thurs,   2
+            159101                                              50g             45c                 Sun
+            218568                                              100g            75c		
+            349313                                              add 1kg         $1.00
+            218055
+            218115      USA             Fedex                   20g             60c                 Tues, Wed, Sat,     4			
+            319075                                              50g             75c                 Sun
+            408936                                              100g            $1.00			
+            349483                                              add 1kg         $4.00
+            577197
+            416175      Singapore       SpeedPost               20g             35c                 All days            1
+                                                                50g             45c				
+                                                                100g            75c
+                                                                add 1kg         $1.00
+																
+                        Malaysia        SpeedPost               20g             35c                 Mon, Wed, Thurs,    1
+                                                                50g             50c                 Sat
+                                                                100g            80c
+                                                                add 1kg         $1.00
+																
+                        USA             SpeedPost               20g             60c                 Tues, Wed, Fri,     4
+                                                                50g             75c                 Sun
+                                                                100g            $3.00
+                                                                add 1kg         $6.00
+																
+Malaysia    81800       Malaysia        DHL                     20g             35c                 All days            1		
+            47100                                               50g             45c
+            43000                                               100g            75c
+            68100                                               add 1kg         $1.00
+            93350
+            51200       Singapore       DHL                     20g             55c                 Mon, Wed, Thurs,    2	
+            93400                                               50g             60c                 Sat
+            46300                                               100g            75c					
+            47500                                               add 1kg         $1.00				
+            40150	
+            55200       USA             DHL                     20g             60c                 Tues, Wed, Fri,     5
+            30250                                               50g             75c                 Sat				
+            68000                                               100g            $1.00				
+            18000                                               add 1kg         $5.00
+            46320
+            88300       Malaysia        Fedex                   20g             35c                 All days            1
+            81100                                               50g             45c	
+            11500                                               100g            75c
+            93300                                               add 1kg         $1.00
+            47301
+            81120       Singapore       Fedex                   20g             55c                 Mon, Tues, Thurs,   2
+            30000                                               50g             50c                 Sun
+            97000                                               100g            75c		
+            30250                                               add 1kg         $1.00
+            47302
+            46150       USA             Fedex                   20g             50c                 Tues, Wed, Sat,     7			
+            31500                                               50g             85c                 Sun
+            14000                                               100g            $1.10			
+            47620                                               add 1kg         $4.00
+            11520
+            46000       Malaysia        SpeedPost               20g             30c                 All days            1
+            89500                                               50g             45c				
+                                                                100g            75c
+                                                                add 1kg         $1.00
+																
+                        Singapore       SpeedPost               20g             45c                 Mon, Wed, Thurs,    2
+                                                                50g             55c                 Sat
+                                                                100g            85c
+                                                                add 1kg         $1.00
+																
+                        USA             SpeedPost               20g             50c                 Tues, Wed, Fri,     6
+                                                                50g             85c                 Sun
+                                                                100g            $1.10
+                                                                add 1kg         $4.50
+																
+USA         11738       USA             DHL                     20g             45c                 All days            1		
+            92111                                               50g             55c
+            92105                                               100g            85c
+            92118                                               add 1kg         $1.00
+            92108
+            92103       Singapore       DHL                     20g             65c                 Mon, Wed, Thurs,    4	
+            92014                                               50g             70c                 Sat
+            92130                                               100g            75c					
+            92126                                               add 1kg         $4.00				
+            92123	
+            92128       Malaysia        DHL                     20g             50c                 Tues, Wed, Fri,     5
+            10022                                               50g             85c                 Sat				
+            10016                                               100g            $1.00				
+            10037                                               add 1kg         $5.00
+            10033
+            10019       USA             Fedex                   20g             45c                 All days            1
+            10025                                               50g             65c	
+            10002                                               100g            85c
+            10035                                               add 1kg         $1.00
+            10034
+            10040       Singapore       Fedex                   20g             65c                 Mon, Tues, Thurs,   5
+            20006                                               50g             80c                 Sun
+            20016                                               100g            95c		
+            20001                                               add 1kg         $3.00
+            20007
+            20006       Malaysia        Fedex                   20g             65c                 Tues, Wed, Sat,     4			
+            20003                                               50g             85c                 Sun
+            60622                                               100g            $1.00			
+            60609                                               add 1kg         $4.00
+            60804
+            60647       USA             SpeedPost               20g             45c                 All days            1
+            60618                                               50g             55c				
+                                                                100g            85c
+                                                                add 1kg         $1.00
+																
+                        Singapore       SpeedPost               20g             55c                 Mon, Wed, Thurs,    2
+                                                                50g             80c                 Sat
+                                                                100g            $2.00
+                                                                add 1kg         $1.00
+																
+                        Malaysia        SpeedPost               20g             50c                 Tues, Wed, Fri,     6
+                                                                50g             85c                 Sun
+                                                                100g            $2.00
+                                                                add 1kg         $4.00

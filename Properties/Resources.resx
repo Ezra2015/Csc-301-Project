@@ -124,16 +124,7 @@
   <data name="pdf-file-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pdf-file-icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LocalOverseasPostageRates1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Report\LocalOverseasPostageRates.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LocalOverseasPostageRates" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Report\LocalOverseasPostageRates.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Word-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Word-icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LocalOverseasPostageRates2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Report\LocalOverseasPostageRates.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
