@@ -386,7 +386,7 @@ namespace ParcelDeliverySystem
         // Calculate the estimated delivery time
         private void calBtn_Click(object sender, EventArgs e)
         {
-            // Output the result of Estimated delivery Time
+            // create the instance of the result of Estimated delivery Time
             EDTOutput edtOutput = new EDTOutput();
             if (this.errorDate.GetError(this.datePicker) == "" && this.errorDPC.GetError(this.dpcTxtBox) == "" &&
                 this.errorPC.GetError(this.opcTxtBox) == "")
@@ -396,14 +396,14 @@ namespace ParcelDeliverySystem
                 edtOutput.getdslbl2.Text = dsresult[1];
                 edtOutput.getdslbl3.Text = dsresult[2];
 
+                string[] getAvailabledays = txtFile.availableDaysOrigin_3DestDHL();
+
                 switch (OrigCountryCombo.SelectedItem.ToString())
                 {
                     case "SIN":
                         int[] getWorkingDaysSIN_DHL = txtFile.workingDaysSIN_DHL();
                         int[] getWorkingDaysSIN_Fedex = txtFile.workingDaysSIN_Fedex();
                         int[] getWorkingDaysSIN_SpeedPost = txtFile.workingDaysSIN_SpeedPost();
-                        //get available days for delivery from text file
-                        string[] days_SIN = txtFile.AvailableDaysOrigin_3DestDHL();
                         switch (DestCountryCombo.SelectedItem.ToString())
                         {
                             case "SIN":
@@ -432,9 +432,8 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysSIN_Fedex[0].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysSIN_SpeedPost[0].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-//                                if (days_SIN[0].StartsWith("All"))
-//                                {
+                                if (getAvailabledays[0].StartsWith("All"))
+                                {
                                     if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
                                     {
                                         this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
@@ -448,18 +447,57 @@ namespace ParcelDeliverySystem
                                             int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
                                     }
                                     edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_DHL[0] * 24)
-                                        .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                     edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_Fedex[0] * 24)
-                                        .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                     edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_SpeedPost[0] * 24)
-                                        .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                //}
-                                //else
-                                //{
-                                //    edtOutput.getedlbl1.Text = "Not Available day for delivery";
-                                //    edtOutput.getedlbl2.Text = "Not Available day for delivery";
-                                //    edtOutput.getedlbl3.Text = "Not Available day for delivery";
-                                //}
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                }
+                                else if (getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
+                                {
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[0]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_DHL[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_Fedex[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_SpeedPost[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
+                                }
+
                                 break;
                             case "MAS":
                                 edtOutput.getoclbl1.Text = this.OrigCountryCombo.SelectedItem.ToString();
@@ -486,13 +524,9 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl1.Text = getWorkingDaysSIN_DHL[1].ToString();
                                 edtOutput.getwdlbl2.Text = getWorkingDaysSIN_Fedex[1].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysSIN_SpeedPost[1].ToString();
-
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                //if (!days_SIN[1].StartsWith("All"))
-                                //{
-                                //    string[] getSplitDays = new string[4];
-                                    
-
+                                
+                                if(getAvailabledays[1].StartsWith("All"))
+                                {
                                     if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
                                     {
                                         this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
@@ -506,12 +540,56 @@ namespace ParcelDeliverySystem
                                             int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
                                     }
                                     edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_DHL[1] * 24)
-                                        .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                     edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_Fedex[1] * 24)
-                                        .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                     edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_SpeedPost[1] * 24)
-                                        .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-//                                }
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                }
+                                else if (getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
+                                {
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[1]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_DHL[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_Fedex[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_SpeedPost[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
+                                }
                                 break;
                             case "USA":
                                 edtOutput.getoclbl1.Text = this.OrigCountryCombo.SelectedItem.ToString();
@@ -539,25 +617,72 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysSIN_Fedex[2].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysSIN_SpeedPost[2].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                if (getAvailabledays[2].StartsWith("All"))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    }
+                                    if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    }
+                                    edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_DHL[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_Fedex[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_SpeedPost[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                 }
-                                if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                else if (getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[2]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_DHL[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_Fedex[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_SpeedPost[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
                                 }
-                                edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_DHL[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_Fedex[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysSIN_SpeedPost[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+
                                 break;
                         }
                         break;
@@ -594,25 +719,72 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysMAS_Fedex[0].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysMAS_SpeedPost[0].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                if (getAvailabledays[0].StartsWith("All"))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    }
+                                    if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    }
+                                    edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[0] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[0] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[0] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                 }
-                                if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                else if (getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[0]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
                                 }
-                                edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[0] *24)
-                                    .ToString("dd/MM/yyyy" + "\n"+"HH:mm");
-                                edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[0] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[0] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+
                                 break;
                             case "SIN":
                                 edtOutput.getoclbl1.Text = this.OrigCountryCombo.SelectedItem.ToString();
@@ -640,25 +812,71 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysMAS_Fedex[1].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysMAS_SpeedPost[1].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                if (getAvailabledays[1].StartsWith("All"))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    }
+                                    if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    }
+                                    edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[1] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[1] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[1] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                 }
-                                if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                else if (getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[1]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
                                 }
-                                edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[1] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[1] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[1] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
                                 break;
                             case "USA":
                                 edtOutput.getoclbl1.Text = this.OrigCountryCombo.SelectedItem.ToString();
@@ -686,25 +904,72 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysMAS_Fedex[2].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysMAS_SpeedPost[2].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                if (getAvailabledays[2].StartsWith("All"))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    }
+                                    if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    }
+                                    edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                 }
-                                if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                else if (getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[2]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
                                 }
-                                edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_DHL[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_Fedex[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysMAS_SpeedPost[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+
                                 break;
 
                         }
@@ -742,25 +1007,72 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysUSA_Fedex[0].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysUSA_SpeedPost[0].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                if(getAvailabledays[0].StartsWith("All"))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    }
+                                    if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    }
+                                    edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[0] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[0] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[0] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                 }
-                                if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                else if (getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[0].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[0]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[0] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
                                 }
-                                edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[0] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[0] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[0] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+
                                 break;
                             case "SIN":
                                 edtOutput.getoclbl1.Text = this.OrigCountryCombo.SelectedItem.ToString();
@@ -788,25 +1100,72 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysUSA_Fedex[1].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysUSA_SpeedPost[1].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                if(getAvailabledays[1].StartsWith("All"))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    }
+                                    if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    }
+                                    edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[1] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[1] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[1] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                 }
-                                if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                else if (getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[1].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[1]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[1] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
                                 }
-                                edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[1] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[1] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[1] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+
                                 break;
                             case "MAS":
                                 edtOutput.getoclbl1.Text = this.OrigCountryCombo.SelectedItem.ToString();
@@ -834,25 +1193,72 @@ namespace ParcelDeliverySystem
                                 edtOutput.getwdlbl2.Text = getWorkingDaysUSA_Fedex[2].ToString();
                                 edtOutput.getwdlbl3.Text = getWorkingDaysUSA_SpeedPost[2].ToString();
 
-                                //this.datePicker.CustomFormat = "HH:mm";
-                                if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                if(getAvailabledays[2].StartsWith("All"))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    if (this.datePicker.Value.Minute != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                    }
+                                    if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                    {
+                                        this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                        this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                            int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    }
+                                    edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                    edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[2] * 24)
+                                        .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
                                 }
-                                if (this.datePicker.Value.Hour != int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                else if (getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                                    getAvailabledays[2].StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
                                 {
-                                    this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
-                                    this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
-                                        int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                    string[] getdays = txtFile.daysEachDayConverter(getAvailabledays[2]);
+
+                                    for (int i = 0; i < getdays.Length; i++)
+                                    {
+                                        if (this.datePicker.Value.ToString("ddd") == getdays[i])
+                                        {
+                                            if (this.datePicker.Value.Minute !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddMinutes(-this.datePicker.Value.Minute +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(3, 2)));
+                                            }
+                                            if (this.datePicker.Value.Hour !=
+                                                int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)))
+                                            {
+                                                this.datePicker.Value = this.datePicker.Value.AddSeconds(-this.datePicker.Value.Second);
+                                                this.datePicker.Value = this.datePicker.Value.AddHours(-this.datePicker.Value.Hour +
+                                                    int.Parse(this.timeCombo.SelectedItem.ToString().Substring(0, 2)));
+                                            }
+                                            edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[2] * 24)
+                                                .ToString("dd/MM/yyyy" + "\n" + "(HH:mm)");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            edtOutput.getedlbl1.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl2.Text = "Not Available day for delivery";
+                                            edtOutput.getedlbl3.Text = "Not Available day for delivery";
+                                        }
+                                    }
                                 }
-                                edtOutput.getedlbl1.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_DHL[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl2.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_Fedex[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
-                                edtOutput.getedlbl3.Text = this.datePicker.Value.AddHours(getWorkingDaysUSA_SpeedPost[2] * 24)
-                                    .ToString("dd/MM/yyyy" + "\n" + "HH:mm");
+
                                 break;
 
                         }

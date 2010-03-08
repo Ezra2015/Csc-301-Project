@@ -5,6 +5,10 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
+public enum Day
+{
+    Mon, Tue, Wed, Thu, Fri, Sat, Sun
+}
 namespace ParcelDeliverySystem
 {
     class TextParse
@@ -394,7 +398,7 @@ namespace ParcelDeliverySystem
         }
         //get the available days for delivery in each three origin countries (SIN or MAS or USA) 
         //to 3 different destinations (SIN & MAS & USA) in DHL
-        public string[] AvailableDaysOrigin_3DestDHL()
+        public string[] availableDaysOrigin_3DestDHL()
         {
             this.getFile("LocalOverseasSimpleText.txt");
             FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
@@ -447,7 +451,7 @@ namespace ParcelDeliverySystem
         }
         //get the available days for delivery in each three origin countries (SIN or MAS or USA) 
         //to 3 different destinations (SIN & MAS & USA) in Fedex
-        public string[] AvailableDaysOrigin_3DestFedex()
+        public string[] availableDaysOrigin_3DestFedex()
         {
             this.getFile("LocalOverseasSimpleText.txt");
             FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
@@ -500,7 +504,7 @@ namespace ParcelDeliverySystem
         }
         //get the available days for delivery in each three origin countries (SIN or MAS or USA) 
         //to 3 different destinations (SIN & MAS & USA) in SpeedPost
-        public string[] AvailableDaysOrigin_3DestSpeedPost()
+        public string[] availableDaysOrigin_3DestSpeedPost()
         {
             this.getFile("LocalOverseasSimpleText.txt");
             FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
@@ -584,6 +588,24 @@ namespace ParcelDeliverySystem
             s.Close();
             sr.Close();
             return threeDS;
+        }
+        //Split available days into individual day in array if got delimiter, ','
+        public string[] daysEachDayConverter(string availableDaysOrigin)
+        {
+            string[] daysEachDay = new string[7]; // get maximum number of days in 1 week
+            
+            if (availableDaysOrigin.StartsWith(Enum.GetName(typeof(Day), Day.Mon)) ||
+                availableDaysOrigin.StartsWith(Enum.GetName(typeof(Day), Day.Tue)) ||
+                availableDaysOrigin.StartsWith(Enum.GetName(typeof(Day), Day.Wed)) ||
+                availableDaysOrigin.StartsWith(Enum.GetName(typeof(Day), Day.Thu)) ||
+                availableDaysOrigin.StartsWith(Enum.GetName(typeof(Day), Day.Fri)) ||
+                availableDaysOrigin.StartsWith(Enum.GetName(typeof(Day), Day.Sat)) ||
+                availableDaysOrigin.StartsWith(Enum.GetName(typeof(Day), Day.Sun)))
+            {
+                string replaceString = availableDaysOrigin.Replace(" ","");
+                daysEachDay = replaceString.Split(',');
+            }
+            return daysEachDay;
         }
     }
 }
