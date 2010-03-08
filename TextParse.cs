@@ -158,6 +158,432 @@ namespace ParcelDeliverySystem
             sr.Close();
             return usPC;
         }
+        //get the number of estimated working days for delivery for DHL from origin Singapore to 3 destinations
+        public int[] workingDaysSIN_DHL()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
 
+            int[] DaysSIN_DHL = new int[3];
+            int j=0; // starting index of  DaysSIN_DHL in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 17; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 6 && StringLine.Length > 120)
+                    {
+                        DaysSIN_DHL[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysSIN_DHL;
+        }
+        //get the number of estimated days for delivery for Fedex from origin Singapore to 3 destinations
+        public int[] workingDaysSIN_Fedex()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysSIN_Fedex = new int[3];
+            int j = 0; // starting index of  DaysSIN_Fedex in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 32; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 21 && StringLine.Length > 120)
+                    {
+                        DaysSIN_Fedex[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysSIN_Fedex;
+        }
+        //get the number of estimated days for delivery for SpeedPost from origin Singapore to 3 destinations
+        public int[] workingDaysSIN_SpeedPost()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysSIN_SpeedPost = new int[3];
+            int j = 0; // starting index of  DaysSIN_SpeedPost in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 47; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 36 && StringLine.Length > 120)
+                    {
+                        DaysSIN_SpeedPost[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysSIN_SpeedPost;
+        }
+        //get the number of estimated days for delivery for DHL from origin Malaysia to 3 destinations
+        public int[] workingDaysMAS_DHL()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysMAS_DHL = new int[3];
+            int j = 0; // starting index of  DaysMAS_DHL in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 62; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 51 && StringLine.Length > 120)
+                    {
+                        DaysMAS_DHL[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysMAS_DHL;
+        }
+        //get the number of estimated days for delivery for Fedex from origin Malaysia to 3 destinations
+        public int[] workingDaysMAS_Fedex()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysMAS_Fedex = new int[3];
+            int j = 0; // starting index of  DaysMAS_Fedex in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 77; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 66 && StringLine.Length > 120)
+                    {
+                        DaysMAS_Fedex[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysMAS_Fedex;
+        }
+        //get the number of estimated days for delivery for SpeedPost from origin Malaysia to 3 destinations
+        public int[] workingDaysMAS_SpeedPost()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysMAS_SpeedPost = new int[3];
+            int j = 0; // starting index of  DaysMAS_Fedex in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 92 ; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 81 && StringLine.Length > 120)
+                    {
+                        DaysMAS_SpeedPost[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysMAS_SpeedPost;
+        }
+        //get the number of estimated days for delivery for DHL from origin USA to 3 destinations
+        public int[] workingDaysUSA_DHL()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysUSA_DHL = new int[3];
+            int j = 0; // starting index of  DaysMAS_Fedex in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 107; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 96 && StringLine.Length > 120)
+                    {
+                        DaysUSA_DHL[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysUSA_DHL;
+        }
+        //get the number of estimated days for delivery for Fedex from origin USA to 3 destinations
+        public int[] workingDaysUSA_Fedex()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysUSA_Fedex = new int[3];
+            int j = 0; // starting index of  DaysMAS_Fedex in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 122; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 111 && StringLine.Length > 120)
+                    {
+                        DaysUSA_Fedex[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysUSA_Fedex;
+        }
+        //get the number of estimated days for delivery for SpeedPost from origin USA to 3 destinations
+        public int[] workingDaysUSA_SpeedPost()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            int[] DaysUSA_SpeedPost = new int[3];
+            int j = 0; // starting index of  DaysMAS_Fedex in order to remove spaces between two elements in i
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 139; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 126 && StringLine.Length > 120)
+                    {
+                        DaysUSA_SpeedPost[j] = int.Parse(StringLine.Substring(120, 1));
+                        j++;
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return DaysUSA_SpeedPost;
+        }
+        //get the available days for delivery in each three origin countries (SIN or MAS or USA) 
+        //to 3 different destinations (SIN & MAS & USA) in DHL
+        public string[] AvailableDaysOrigin_3DestDHL()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            string[] Days3Countries = new string[3];
+            int j = 0; // starting index of  Days3Countries
+            string[] getDays3Countries = new string[15];
+            int k = 0; // starting index of getDays3Countries
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 18; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 6 && StringLine.Length > 100)
+                    {
+                        if (StringLine.Length != 121)// check whether string got estimated working days
+                        {
+                            getDays3Countries[k] = StringLine.Substring(100);
+                        }
+                        else
+                        {
+                            getDays3Countries[k] = StringLine.Substring(100, 16);
+                        }
+                        k++;
+                    }
+                }
+                break;
+            }
+            for(int i = 0; i < getDays3Countries.Length; i++ )
+            {
+                if (getDays3Countries[i] != null)
+                {
+                    if (getDays3Countries[i].StartsWith("All"))
+                    {
+                        Days3Countries[j] = getDays3Countries[i].Replace('*', ' ');
+                    }
+                    else
+                    {
+                        Days3Countries[j] = getDays3Countries[i].Replace('*', ' ') +
+                            " " + getDays3Countries[i + 1].Replace('*', ' ');
+                        i+=1;
+                    }
+                }
+                j++;
+            }
+            s.Close();
+            sr.Close();
+            return Days3Countries;
+        }
+        //get the available days for delivery in each three origin countries (SIN or MAS or USA) 
+        //to 3 different destinations (SIN & MAS & USA) in Fedex
+        public string[] AvailableDaysOrigin_3DestFedex()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            string[] Days3Countries = new string[3];
+            int j = 0; // starting index of  Days3Countries
+            string[] getDays3Countries = new string[15];
+            int k = 0; // starting index of getDays3Countries
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 33; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 21 && StringLine.Length > 100)
+                    {
+                        if (StringLine.Length != 121)// check whether string got estimated working days
+                        {
+                            getDays3Countries[k] = StringLine.Substring(100);
+                        }
+                        else
+                        {
+                            getDays3Countries[k] = StringLine.Substring(100, 16);
+                        }
+                        k++;
+                    }
+                }
+                break;
+            }
+            for (int i = 0; i < getDays3Countries.Length; i++)
+            {
+                if (getDays3Countries[i] != null)
+                {
+                    if (getDays3Countries[i].StartsWith("All"))
+                    {
+                        Days3Countries[j] = getDays3Countries[i].Replace('*', ' ');
+                    }
+                    else
+                    {
+                        Days3Countries[j] = getDays3Countries[i].Replace('*', ' ') +
+                            " " + getDays3Countries[i + 1].Replace('*', ' ');
+                        i += 1;
+                    }
+                }
+                j++;
+            }
+            s.Close();
+            sr.Close();
+            return Days3Countries;
+        }
+        //get the available days for delivery in each three origin countries (SIN or MAS or USA) 
+        //to 3 different destinations (SIN & MAS & USA) in SpeedPost
+        public string[] AvailableDaysOrigin_3DestSpeedPost()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            string[] Days3Countries = new string[3];
+            int j = 0; // starting index of  Days3Countries
+            string[] getDays3Countries = new string[15];
+            int k = 0; // starting index of getDays3Countries
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 48; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    if (i >= 36 && StringLine.Length > 100)
+                    {
+                        if (StringLine.Length != 121)// check whether string got estimated working days
+                        {
+                            getDays3Countries[k] = StringLine.Substring(100);
+                        }
+                        else
+                        {
+                            getDays3Countries[k] = StringLine.Substring(100, 16);
+                        }
+                        k++;
+                    }
+                }
+                break;
+            }
+            for (int i = 0; i < getDays3Countries.Length; i++)
+            {
+                if (getDays3Countries[i] != null)
+                {
+                    if (getDays3Countries[i].StartsWith("All"))
+                    {
+                        Days3Countries[j] = getDays3Countries[i].Replace('*', ' ');
+                    }
+                    else
+                    {
+                        Days3Countries[j] = getDays3Countries[i].Replace('*', ' ') +
+                            " " + getDays3Countries[i + 1].Replace('*', ' ');
+                        i += 1;
+                    }
+                }
+                j++;
+            }
+            s.Close();
+            sr.Close();
+            return Days3Countries;
+        }
+        // get 3 Delivery Service from text file
+        public string[] threeDeliveryService()
+        {
+            this.getFile("LocalOverseasSimpleText.txt");
+            FileStream s = new FileStream(this.getFoundFile(), FileMode.Open);
+            StreamReader sr = new StreamReader(s);
+
+            string[] threeDS = new string[3];
+            int j = 0; // starting index of  threeDS
+            while (sr.ReadLine() != null)
+            {
+                for (int i = 0; i < 38; i++)
+                {
+                    string StringLine = sr.ReadLine();
+                    StringLine = StringLine.Replace("*", " ");
+                    if (i >= 6 && StringLine.Length >= 25 && StringLine.Substring(40, 1) != " ")
+                    {
+                        threeDS[j] = StringLine.Substring(40, 10).Replace(" ","");
+                        if (j < threeDS.Length - 1 )
+                        {
+                            j++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+            s.Close();
+            sr.Close();
+            return threeDS;
+        }
     }
 }

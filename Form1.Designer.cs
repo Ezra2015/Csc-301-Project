@@ -34,7 +34,7 @@
             this.edtPage = new System.Windows.Forms.TabPage();
             this.closeBtn = new System.Windows.Forms.Button();
             this.edtBox = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.timeCombo = new System.Windows.Forms.ComboBox();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.rstBtn = new System.Windows.Forms.Button();
             this.calBtn = new System.Windows.Forms.Button();
@@ -112,13 +112,14 @@
             this.closeBtn.Location = new System.Drawing.Point(251, 267);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(75, 23);
-            this.closeBtn.TabIndex = 14;
+            this.closeBtn.TabIndex = 9;
             this.closeBtn.Text = "Close";
             this.closeBtn.UseVisualStyleBackColor = true;
+            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
             // edtBox
             // 
-            this.edtBox.Controls.Add(this.comboBox1);
+            this.edtBox.Controls.Add(this.timeCombo);
             this.edtBox.Controls.Add(this.datePicker);
             this.edtBox.Controls.Add(this.rstBtn);
             this.edtBox.Controls.Add(this.calBtn);
@@ -139,12 +140,12 @@
             this.edtBox.TabStop = false;
             this.edtBox.Text = "Estimated Delivery Time";
             // 
-            // comboBox1
+            // timeCombo
             // 
-            this.comboBox1.DropDownHeight = 100;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.IntegralHeight = false;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.timeCombo.DropDownHeight = 100;
+            this.timeCombo.FormattingEnabled = true;
+            this.timeCombo.IntegralHeight = false;
+            this.timeCombo.Items.AddRange(new object[] {
             "00:00",
             "00:30",
             "01:00",
@@ -189,12 +190,12 @@
             "22:30",
             "23:00",
             "23:30"});
-            this.comboBox1.Location = new System.Drawing.Point(436, 114);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(130, 21);
-            this.comboBox1.Sorted = true;
-            this.comboBox1.TabIndex = 11;
-            this.comboBox1.Text = "00:00";
+            this.timeCombo.Location = new System.Drawing.Point(436, 114);
+            this.timeCombo.Name = "timeCombo";
+            this.timeCombo.Size = new System.Drawing.Size(130, 21);
+            this.timeCombo.Sorted = true;
+            this.timeCombo.TabIndex = 6;
+            this.timeCombo.Text = "00:00";
             // 
             // datePicker
             // 
@@ -205,7 +206,7 @@
             this.datePicker.MinDate = new System.DateTime(2010, 3, 1, 0, 0, 0, 0);
             this.datePicker.Name = "datePicker";
             this.datePicker.Size = new System.Drawing.Size(140, 20);
-            this.datePicker.TabIndex = 10;
+            this.datePicker.TabIndex = 5;
             this.datePicker.ValueChanged += new System.EventHandler(this.datePicker_ValueChanged);
             // 
             // rstBtn
@@ -213,16 +214,17 @@
             this.rstBtn.Location = new System.Drawing.Point(294, 195);
             this.rstBtn.Name = "rstBtn";
             this.rstBtn.Size = new System.Drawing.Size(75, 23);
-            this.rstBtn.TabIndex = 13;
+            this.rstBtn.TabIndex = 8;
             this.rstBtn.Text = "Reset";
             this.rstBtn.UseVisualStyleBackColor = true;
+            this.rstBtn.Click += new System.EventHandler(this.rstBtn_Click);
             // 
             // calBtn
             // 
             this.calBtn.Location = new System.Drawing.Point(200, 195);
             this.calBtn.Name = "calBtn";
             this.calBtn.Size = new System.Drawing.Size(75, 23);
-            this.calBtn.TabIndex = 12;
+            this.calBtn.TabIndex = 7;
             this.calBtn.Text = "Calculate";
             this.calBtn.UseVisualStyleBackColor = true;
             this.calBtn.Click += new System.EventHandler(this.calBtn_Click);
@@ -232,7 +234,8 @@
             this.dpcTxtBox.Location = new System.Drawing.Point(436, 79);
             this.dpcTxtBox.Name = "dpcTxtBox";
             this.dpcTxtBox.Size = new System.Drawing.Size(130, 20);
-            this.dpcTxtBox.TabIndex = 9;
+            this.dpcTxtBox.TabIndex = 4;
+            this.dpcTxtBox.TextChanged += new System.EventHandler(this.dpcTxtBox_TextChanged);
             this.dpcTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dpcTxtBox_KeyDown);
             // 
             // opcTxtBox
@@ -240,7 +243,8 @@
             this.opcTxtBox.Location = new System.Drawing.Point(436, 41);
             this.opcTxtBox.Name = "opcTxtBox";
             this.opcTxtBox.Size = new System.Drawing.Size(130, 20);
-            this.opcTxtBox.TabIndex = 7;
+            this.opcTxtBox.TabIndex = 2;
+            this.opcTxtBox.TextChanged += new System.EventHandler(this.opcTxtBox_TextChanged);
             this.opcTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.opcTxtBox_KeyDown);
             // 
             // DestCountryCombo
@@ -253,7 +257,7 @@
             this.DestCountryCombo.Location = new System.Drawing.Point(135, 78);
             this.DestCountryCombo.Name = "DestCountryCombo";
             this.DestCountryCombo.Size = new System.Drawing.Size(140, 21);
-            this.DestCountryCombo.TabIndex = 8;
+            this.DestCountryCombo.TabIndex = 3;
             this.DestCountryCombo.Text = "SIN";
             // 
             // OrigCountryCombo
@@ -266,7 +270,7 @@
             this.OrigCountryCombo.Location = new System.Drawing.Point(135, 41);
             this.OrigCountryCombo.Name = "OrigCountryCombo";
             this.OrigCountryCombo.Size = new System.Drawing.Size(140, 21);
-            this.OrigCountryCombo.TabIndex = 6;
+            this.OrigCountryCombo.TabIndex = 1;
             this.OrigCountryCombo.Text = "SIN";
             // 
             // label6
@@ -573,7 +577,7 @@
             this.ClientSize = new System.Drawing.Size(634, 372);
             this.Controls.Add(this.rateCost);
             this.Controls.Add(this.tabControl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(800, 600);
             this.MinimumSize = new System.Drawing.Size(640, 400);
@@ -619,8 +623,7 @@
         private System.Windows.Forms.Button closeBtn;
         private System.Windows.Forms.Button rstBtn;
         private System.Windows.Forms.Button calBtn;
-        private System.Windows.Forms.DateTimePicker datePicker;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox timeCombo;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox pcBox;
         private System.Windows.Forms.Button rstBtn1;
@@ -642,6 +645,7 @@
         private System.Windows.Forms.ErrorProvider errorDate;
         private System.Windows.Forms.ErrorProvider errorPC;
         private System.Windows.Forms.ErrorProvider errorDPC;
+        private System.Windows.Forms.DateTimePicker datePicker;
     }
 }
 

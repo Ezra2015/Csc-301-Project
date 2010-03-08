@@ -18,3 +18,4 @@ C:\Users\E\Desktop\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.Propertie
 C:\Users\E\Desktop\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.csproj.GenerateResource.Cache
 C:\Users\E\Desktop\ParcelDeliverySystem\bin\Debug\ParcelDeliverySystem.exe
 C:\Users\E\Desktop\ParcelDeliverySystem\bin\Debug\ParcelDeliverySystem.pdb
+C:\Users\E\Desktop\ParcelDeliverySystem\obj\Debug\ParcelDeliverySystem.EDTOutput.resources

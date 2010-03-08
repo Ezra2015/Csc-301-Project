@@ -51,6 +51,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(726, 521);
             this.Controls.Add(this.lorBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Local_OverseasPostageRates";
             this.Text = "Local_OverseasPostageRates";
             this.Resize += new System.EventHandler(this.Local_OverseasPostageRates_Resize);
